@@ -52,9 +52,9 @@ function App() {
     getPosts();
   }, []);
 
-  const parseImageUrl = (post) => {
-    if (post.profile) {
-      const url = post.profile.picture?.original?.url;
+  const parseImageUrl = (profile) => {
+    if (profile) {
+      const url = profile.picture?.original?.url;
       if (url && url.startsWith("ipfs:")) {
         const ipfsHash = url.split("//")[1];
         return `https://gateway.pinata.cloud/ipfs/${ipfsHash}`;
@@ -85,7 +85,7 @@ function App() {
             <Box> Decentralized Social Media App</Box>
           </Box>
           {account ? (
-            <Box backgroundColor="000" padding="15px" borderRadius="6px">
+            <Box backgroundColor="#000" padding="15px" borderRadius="6px">
               Connected
             </Box>
           ) : (
@@ -118,7 +118,7 @@ function App() {
                 <Box width="75px" height="75px" marginTop="8px">
                   <img
                     alt="profile"
-                    src={parseImageUrl(post)}
+                    src={parseImageUrl(post.profile)}
                     width="75px"
                     height="75px"
                     onError={({ currentTarget }) => {
@@ -154,7 +154,42 @@ function App() {
         </Box>
 
         {/* FRIEND SUGGESTIONS */}
-        <Box></Box>
+        <Box
+          width="30%"
+          backgroundColor="rgba(5, 32, 64, 28)"
+          padding="40px 25px"
+          borderRadius="6px"
+          height="fit-content"
+        >
+          <Box fontFamily="DM Serif Display">FRIEND SUGGESTIONS</Box>
+          <Box>
+            {profiles.map((profile, i) => (
+              <Box
+                key={profile.id}
+                margin="30px 0"
+                display="flex"
+                alignItems="center"
+                height="40px"
+                _hover={{ color: "#808080", cursor: "pointer" }}
+              >
+                <img
+                  alt="profile"
+                  src={parseImageUrl(profile)}
+                  width="40px"
+                  height="40px"
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = "/default-avatar.png"
+                  }}
+                />
+                <Box marginLeft="25px">
+                  <h4>{profile.name}</h4>
+                  <p>{profile.handle}</p>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
       </Box>
     </div>
   );
