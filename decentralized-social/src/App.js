@@ -54,6 +54,33 @@ function App() {
 
   return (
     <div className="app">
+      <Box width="100%" backgroundColor="rgba(5, 32, 64, 28)">
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          width="55%"
+          margin="auto"
+          color="white"
+          padding="10px 0"
+        >
+          <Box>
+            <Box fontFamily="DM Serif Display" fontSize="44px" fontStyle="italic">
+              DECENTRA
+            </Box>
+            <Box> Decentralized Social Media App</Box>
+          </Box>
+          {account ? (
+            <Box backgroundColor="000" padding="15px" borderRadius="6px">
+              Connected
+            </Box>
+          ) : (
+            <Button onClick={signIn} color="rgba(5, 32, 64)" _hover={{ backgroundColor: "#808080" }}>
+              Connect
+            </Button>
+          )}
+        </Box>
+      </Box>
     </div>
   );
 }
